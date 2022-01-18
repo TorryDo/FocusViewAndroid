@@ -13,6 +13,8 @@ import android.util.Log;
 import android.util.Size;
 import android.view.View;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 
 
@@ -26,8 +28,9 @@ public class FocusView {
 
     public static final String KEY_ACTIVITY_CONNECTOR = "<><>";
 
-    private Builder builder;
+    public static FocusViewListener focusViewListener = new DefaultFocusViewListener();
 
+    private final Builder builder;
 
     FocusView(Builder builder) {
         this.builder = builder;
@@ -37,22 +40,26 @@ public class FocusView {
 
         Intent intent = new Intent(builder.context, FocusViewActivity.class);
 
-        FocusViewProps props = new FocusViewProps().copyBuilder(builder);
+        String json = new FocusViewProps().copyBuilder(builder).toGson();
 
-        intent.putExtra(KEY_ACTIVITY_CONNECTOR, props);
+        intent.putExtra(KEY_ACTIVITY_CONNECTOR, json);
+        focusViewListener = builder.focusViewListener;
 
         builder.context.startActivity(intent);
         return this;
     }
 
-    // --------------------------------------------------
 
+
+
+    // Builder -------------------------------------------------------------------------------------
 
     public static class Builder extends FocusViewProps {
 
         Context context;
         View view;
 
+        FocusViewListener focusViewListener = new DefaultFocusViewListener();
 
         public Builder(Context context) {
             this.context = context;
@@ -61,9 +68,54 @@ public class FocusView {
 
         public Builder setTargetView(View view) {
             this.view = view;
-
             return this;
         }
+
+        public Builder setTargetBitmap(Bitmap targetBitmap) {
+            this.targetBitmap = targetBitmap;
+            return this;
+        }
+
+        public Builder setTargetSize(Size targetSize) {
+            this.targetSize = targetSize;
+            return this;
+        }
+
+        public Builder setTargetPoint(Point targetPoint) {
+            this.targetPoint = targetPoint;
+            return this;
+        }
+
+        public Builder setBackgroundAlpha(float backgroundAlpha) {
+            this.backgroundAlpha = backgroundAlpha;
+            return this;
+        }
+
+        public Builder setBackgroundColor(int backgroundColor) {
+            this.backgroundColor = backgroundColor;
+            return this;
+        }
+
+        public Builder setTextColor(int textColor) {
+            this.textColor = textColor;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setContentText(String contentText) {
+            this.contentText = contentText;
+            return this;
+        }
+
+        public Builder addFocusViewListener(FocusViewListener focusViewListener) {
+            this.focusViewListener = focusViewListener;
+            return this;
+        }
+
 
 
         public FocusView build() {
@@ -72,7 +124,3 @@ public class FocusView {
     }
 }
 
-
-//    private Logger logger = new Logger()
-//            .setDebugEnabled(Constants.isDebugEnabled)
-//            .setTag(this.getClass().getSimpleName());

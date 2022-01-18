@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="OnlyView" parent="Theme.AppCompat.Light.NoActionBar">
         <!--        <item name="android:background">#33000000</item>     this attr make grey background, apply this into layout and change elevation of children to fix -->
 
@@ -24,4 +25,5 @@
 <!--        <item name="android:windowEnterAnimation">@anim/open_fade_zoomin</item>-->
 <!--        <item name="android:windowExitAnimation">@anim/exit_fade_zoomout</item>-->
     </style>
+
 </resources>
