@@ -2,4 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.torrydo.focusview">
 
+    <application>
+        <activity
+            android:name=".FocusViewActivity"
+            android:exported="false"
+            android:theme="@style/OnlyView"
+            />
+    </application>
+
 </manifest>
