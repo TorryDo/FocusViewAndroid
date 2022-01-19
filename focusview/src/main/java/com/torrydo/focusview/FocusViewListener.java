@@ -4,21 +4,21 @@ import android.util.Log;
 
 public interface FocusViewListener {
 
-    void onShow();
+    void onCreate();
 
-    void onExit();
+    void onDestroy();
 
 }
 
 class DefaultFocusViewListener implements FocusViewListener{
 
     @Override
-    public void onShow() {
+    public void onCreate() {
         Log.d("FocusViewListener", "onShow");
     }
 
     @Override
-    public void onExit() {
+    public void onDestroy() {
         Log.d("FocusViewListener", "onExit");
     }
 }

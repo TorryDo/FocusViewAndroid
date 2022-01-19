@@ -6,12 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".FocusViewActivity">
 
-    <View
+    <ImageView
         android:id="@+id/focusView"
         android:layout_width="1500dp"
         android:layout_height="1500dp"
         android:layout_gravity="center"
-        android:alpha="1"
         android:background="@drawable/ic_disk" />
+
+    <ImageView
+        android:id="@+id/targetView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </FrameLayout>

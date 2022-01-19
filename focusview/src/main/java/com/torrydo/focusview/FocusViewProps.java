@@ -2,18 +2,17 @@ package com.torrydo.focusview;
 
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.util.Size;
+import android.graphics.PointF;
+import android.util.SizeF;
 import android.view.View;
 
 class FocusViewProps {
 
-    // get from view
     Bitmap targetBitmap = null;
-    Size targetSize = new Size(0, 0);
-    Point targetPoint = new Point(0, 0);
+    PointF viewPoint = new PointF(0, 0);
 
-    float backgroundAlpha = 0.5f;
-    int backgroundColor = -1;
+    float backgroundAlpha = 1f;
+    int backgroundColor = 0xff000000;
     int textColor = -1;
     String title = "";
     String contentText = "";
@@ -21,25 +20,28 @@ class FocusViewProps {
 
     final FocusViewProps copyBuilder(FocusView.Builder builder) {
 
-        View tempView = builder.view;
-
-        targetBitmap = Utils.getBitmapFromView(tempView);
-        targetSize = new Size(tempView.getWidth(), tempView.getHeight());
-        targetPoint = new Point((int) tempView.getX(), (int) tempView.getY());
-
         backgroundAlpha = builder.backgroundAlpha;
         backgroundColor = builder.backgroundColor;
         textColor = builder.textColor;
         title = builder.title;
         contentText = builder.contentText;
 
-        tempView = null;
+        // ------------------
+
+        View tempView = builder.view;
+        targetBitmap = ViewHelper.getBitmapFromView(tempView);
+
+        Point tempPoint = ViewHelper.getViewLocation(tempView);
+        SizeF tempSizeF = new SizeF(tempView.getWidth(), tempView.getHeight());
+
+        viewPoint = new PointF(tempPoint.x, tempPoint.y);
+
 
         return this;
     }
 
     final String toGson(){
-        return Utils.getGson().toJson(this);
+        return Single.getGson().toJson(this);
     }
 
 
@@ -49,12 +51,8 @@ class FocusViewProps {
         return targetBitmap;
     }
 
-    public Size getTargetSize() {
-        return targetSize;
-    }
-
-    public Point getTargetPoint() {
-        return targetPoint;
+    public PointF getViewPoint() {
+        return viewPoint;
     }
 
     public float getBackgroundAlpha() {

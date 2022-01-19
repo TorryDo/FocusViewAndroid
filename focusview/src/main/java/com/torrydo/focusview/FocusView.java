@@ -26,9 +26,9 @@ public class FocusView {
     public static final int XLARGE = 4;
 
 
-    public static final String KEY_ACTIVITY_CONNECTOR = "<><>";
+    static final String KEY_ACTIVITY_CONNECTOR = "anhyeuem";
 
-    public static FocusViewListener focusViewListener = new DefaultFocusViewListener();
+    static FocusViewListener focusViewListener = new DefaultFocusViewListener();
 
     private final Builder builder;
 
@@ -38,17 +38,21 @@ public class FocusView {
 
     public FocusView show() {
 
-        Intent intent = new Intent(builder.context, FocusViewActivity.class);
+        try {
+            Intent intent = new Intent(builder.context, FocusViewActivity.class);
 
-        String json = new FocusViewProps().copyBuilder(builder).toGson();
+            String json = new FocusViewProps().copyBuilder(builder).toGson();
 
-        intent.putExtra(KEY_ACTIVITY_CONNECTOR, json);
-        focusViewListener = builder.focusViewListener;
+            intent.putExtra(KEY_ACTIVITY_CONNECTOR, json);
+            focusViewListener = builder.focusViewListener;
 
-        builder.context.startActivity(intent);
+            builder.context.startActivity(intent);
+        }catch (Exception e){
+
+        }
+
         return this;
     }
-
 
 
 
@@ -65,24 +69,8 @@ public class FocusView {
             this.context = context;
         }
 
-
         public Builder setTargetView(View view) {
             this.view = view;
-            return this;
-        }
-
-        public Builder setTargetBitmap(Bitmap targetBitmap) {
-            this.targetBitmap = targetBitmap;
-            return this;
-        }
-
-        public Builder setTargetSize(Size targetSize) {
-            this.targetSize = targetSize;
-            return this;
-        }
-
-        public Builder setTargetPoint(Point targetPoint) {
-            this.targetPoint = targetPoint;
             return this;
         }
 
@@ -115,7 +103,6 @@ public class FocusView {
             this.focusViewListener = focusViewListener;
             return this;
         }
-
 
 
         public FocusView build() {
